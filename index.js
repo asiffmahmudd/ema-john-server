@@ -35,6 +35,13 @@ client.connect(err => {
         })
     })
 
+    app.get("/products/:search", (req,res) => {
+        collection.find( { $text: { $search: req.params.search } } )
+        .toArray((err, documents) => {
+            res.send(documents);
+        })
+    })
+
     app.get("/product/:key", (req,res) => {
         collection.find({key:req.params.key})
         .toArray((err, documents) => {
